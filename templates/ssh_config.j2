@@ -1,0 +1,20 @@
+# {{ ansible_managed }}
+#
+
+{%- if openssh.client.config.enable_github %}
+# GitHub needs diffie-hellman-group-exchange-sha1
+Host github.com
+    KexAlgorithms curve25519-sha256@libssh.org,diffie-hellman-group-exchange-sha256,diffie-hellman-group-exchange-sha1,diffie-hellman-group14-sha1
+{% endif %}
+
+Host *
+    KexAlgorithms {{ openssh.client.config.kexalgorithms }}
+    PasswordAuthentication {{ openssh.client.config.passwordauthentication }}
+    PubkeyAuthentication {{ openssh.client.config.pubkeyauthentication }}
+    HostKeyAlgorithms {{ openssh.client.config.hostkeyalgorithms }}
+    Ciphers {{ openssh.client.config.ciphers }}
+    MACs {{ openssh.client.config.macs }}
+    SendEnv LANG LC_*
+    HashKnownHosts yes
+    GSSAPIAuthentication yes
+    GSSAPIDelegateCredentials no

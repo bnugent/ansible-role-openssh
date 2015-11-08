@@ -1,0 +1,76 @@
+---
+- name: Configure OpenSSH client
+  template:
+    src: ssh_config.j2
+    dest: /etc/ssh/ssh_config
+    owner: root
+    group: root
+    mode: "0644"
+
+
+- name: Configure OpenSSH server
+  template:
+    src: sshd_config.j2
+    dest: /etc/ssh/sshd_config
+    owner: root
+    group: root
+    mode: "0644"
+  notify: restart ssh
+
+
+- name: Create SSH user group
+  group:
+    name: "{{ openssh.server.config.usergroup }}"
+    state: present
+
+
+- name: Add ubuntu user to SSH user group
+  user:
+    name: ubuntu
+    append: yes
+    groups: "{{ openssh.server.config.usergroup }}"
+
+
+- name: Remove old host keys
+  file:
+    path: /etc/ssh/{{ item }}
+    state: absent
+  run_once: true
+  with_items:
+    - ssh_host_dsa_key
+    - ssh_host_dsa_key.pub
+    - ssh_host_ecdsa_key
+    - ssh_host_ecdsa_key.pub
+    - ssh_host_key
+    - ssh_host_key.pub
+    - ssh_host_rsa_key
+    - ssh_host_rsa_key.pub
+  when: openssh.server.regenerate_host_keys
+
+
+- name: Generate new ed25519 host key
+  shell: |
+    ssh-keygen -t ed25519 -f ssh_host_ed25519_key -N '' < /dev/null
+    chdir=/etc/ssh
+    creates=/etc/ssh/ssh_host_ed25519_key
+  run_once: true
+  when: openssh.server.regenerate_host_keys
+
+
+- name: Generate new rsa host key
+  shell: |
+    ssh-keygen -t rsa -b 4096 -f ssh_host_rsa_key -N '' < /dev/null
+    chdir=/etc/ssh
+    creates=/etc/ssh/ssh_host_rsa_key
+  run_once: true
+  when: openssh.server.regenerate_host_keys
+
+
+- name: Remove DH groups less than 2000 bits
+  shell: |
+    awk '$5 > 2000' /etc/ssh/moduli > /tmp/moduli && \
+    if [ $(wc -l /tmp/moduli) -gt 0 ]; then
+      mv /tmp/moduli /etc/ssh/moduli
+    fi
+  run_once: true
+  when: openssh.server.regenerate_host_keys

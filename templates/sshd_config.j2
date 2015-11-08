@@ -1,0 +1,40 @@
+# {{ ansible_managed }}
+#
+
+KexAlgorithms {{ openssh.server.config.kexalgorithms }}
+Protocol 2
+HostKey /etc/ssh/ssh_host_rsa_key
+HostKey /etc/ssh/ssh_host_ed25519_key
+PasswordAuthentication {{ openssh.server.config.passwordauthentication }}
+PubkeyAuthentication {{ openssh.server.config.pubkeyauthentication }}
+Ciphers {{ openssh.server.config.ciphers }}
+MACs {{ openssh.server.config.macs }}
+
+Port {{ openssh.server.config.port }}
+{% for addr in openssh.server.config.listenaddress %}
+ListenAddress {{ addr }}
+{% endfor %}
+LogLevel {{ openssh.server.config.loglevel }}
+PermitRootLogin {{ openssh.server.config.permitrootlogin }}
+StrictModes {{ openssh.server.config.strictmodes }}
+AuthorizedKeysFile	.ssh/authorized_keys
+ChallengeResponseAuthentication {{ openssh.server.config.challengeresponseauthentication }}
+UsePAM {{ openssh.server.config.usepam }}
+X11Forwarding {{ openssh.server.config.x11forwarding }}
+MaxAuthTries {{ openssh.server.config.maxauthtries }}
+IgnoreRhosts yes
+HostbasedAuthentication no
+PermitEmptyPasswords no
+PermitUserEnvironment no
+ClientAliveInterval {{ openssh.server.config.clientaliveinterval }}
+ClientAliveCountMax {{ openssh.server.config.clientalivecountmax }}
+PrintMotd no # pam does that
+UsePrivilegeSeparation sandbox		# Default for new installations.
+UseDNS no
+Banner /etc/issue.net
+
+AllowGroups {{ openssh.server.config.usergroup }}
+
+# override default of no subsystems
+Subsystem	sftp	/usr/lib/ssh/sftp-server
+

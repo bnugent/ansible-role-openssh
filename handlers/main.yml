@@ -1,0 +1,5 @@
+---
+- name: restart ssh
+  service:
+    name: "{{ openssh.server.service.name }}"
+    state: restarted
