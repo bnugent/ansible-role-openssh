@@ -20,7 +20,7 @@
 
 - name: Create SSH user group
   group:
-    name: "{{ openssh.server.config.usergroup }}"
+    name: "{{ openssh_server_config_usergroup }}"
     state: present
 
 
@@ -28,7 +28,7 @@
   user:
     name: ubuntu
     append: yes
-    groups: "{{ openssh.server.config.usergroup }}"
+    groups: "{{ openssh_server_config_usergroup }}"
 
 
 - name: Remove old host keys
@@ -45,7 +45,7 @@
     - ssh_host_key.pub
     - ssh_host_rsa_key
     - ssh_host_rsa_key.pub
-  when: openssh.server.regenerate_host_keys
+  when: openssh_server_regenerate_host_keys
 
 
 - name: Generate new ed25519 host key
@@ -54,7 +54,7 @@
     chdir=/etc/ssh
     creates=/etc/ssh/ssh_host_ed25519_key
   run_once: true
-  when: openssh.server.regenerate_host_keys
+  when: openssh_server_regenerate_host_keys
 
 
 - name: Generate new rsa host key
@@ -63,7 +63,7 @@
     chdir=/etc/ssh
     creates=/etc/ssh/ssh_host_rsa_key
   run_once: true
-  when: openssh.server.regenerate_host_keys
+  when: openssh_server_regenerate_host_keys
 
 
 - name: Remove DH groups less than 2000 bits
@@ -73,4 +73,4 @@
       mv /tmp/moduli /etc/ssh/moduli
     fi
   run_once: true
-  when: openssh.server.regenerate_host_keys
+  when: openssh_server_regenerate_host_keys

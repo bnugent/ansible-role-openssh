@@ -1,39 +1,39 @@
 # {{ ansible_managed }}
 #
 
-KexAlgorithms {{ openssh.server.config.kexalgorithms }}
+KexAlgorithms {{ openssh_server_config_kexalgorithms }}
 Protocol 2
 HostKey /etc/ssh/ssh_host_rsa_key
 HostKey /etc/ssh/ssh_host_ed25519_key
-PasswordAuthentication {{ openssh.server.config.passwordauthentication }}
-PubkeyAuthentication {{ openssh.server.config.pubkeyauthentication }}
-Ciphers {{ openssh.server.config.ciphers }}
-MACs {{ openssh.server.config.macs }}
+PasswordAuthentication {{ openssh_server_config_passwordauthentication }}
+PubkeyAuthentication {{ openssh_server_config_pubkeyauthentication }}
+Ciphers {{ openssh_server_config_ciphers }}
+MACs {{ openssh_server_config_macs }}
 
-Port {{ openssh.server.config.port }}
-{% for addr in openssh.server.config.listenaddress %}
+Port {{ openssh_server_config_port }}
+{% for addr in openssh_server_config_listenaddress %}
 ListenAddress {{ addr }}
 {% endfor %}
-LogLevel {{ openssh.server.config.loglevel }}
-PermitRootLogin {{ openssh.server.config.permitrootlogin }}
-StrictModes {{ openssh.server.config.strictmodes }}
+LogLevel {{ openssh_server_config_loglevel }}
+PermitRootLogin {{ openssh_server_config_permitrootlogin }}
+StrictModes {{ openssh_server_config_strictmodes }}
 AuthorizedKeysFile	.ssh/authorized_keys
-ChallengeResponseAuthentication {{ openssh.server.config.challengeresponseauthentication }}
-UsePAM {{ openssh.server.config.usepam }}
-X11Forwarding {{ openssh.server.config.x11forwarding }}
-MaxAuthTries {{ openssh.server.config.maxauthtries }}
+ChallengeResponseAuthentication {{ openssh_server_config_challengeresponseauthentication }}
+UsePAM {{ openssh_server_config_usepam }}
+X11Forwarding {{ openssh_server_config_x11forwarding }}
+MaxAuthTries {{ openssh_server_config_maxauthtries }}
 IgnoreRhosts yes
 HostbasedAuthentication no
 PermitEmptyPasswords no
 PermitUserEnvironment no
-ClientAliveInterval {{ openssh.server.config.clientaliveinterval }}
-ClientAliveCountMax {{ openssh.server.config.clientalivecountmax }}
+ClientAliveInterval {{ openssh_server_config_clientaliveinterval }}
+ClientAliveCountMax {{ openssh_server_config_clientalivecountmax }}
 PrintMotd no # pam does that
 UsePrivilegeSeparation sandbox		# Default for new installations.
 UseDNS no
 Banner /etc/issue.net
 
-AllowGroups {{ openssh.server.config.usergroup }}
+AllowGroups {{ openssh_server_config_usergroup }}
 
 # override default of no subsystems
 Subsystem	sftp	/usr/lib/ssh/sftp-server

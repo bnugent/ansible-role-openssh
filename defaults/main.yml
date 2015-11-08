@@ -1,43 +1,41 @@
 ---
-openssh:
-  client:
-    pkg:
-      name: "openssh-client"
-      state: "latest"
-    config:
-      enable_github: false
-      kexalgorithms: "curve25519-sha256@libssh.org,diffie-hellman-group-exchange-sha256"
-      passwordauthentication: "no"
-      pubkeyauthentication: "yes"
-      hostkeyalgorithms: "ssh-ed25519-cert-v01@openssh.com,ssh-rsa-cert-v01@openssh.com,ssh-rsa-cert-v00@openssh.com,ssh-ed25519,ssh-rsa"
-      ciphers: "chacha20-poly1305@openssh.com,aes256-gcm@openssh.com,aes128-gcm@openssh.com,aes256-ctr,aes192-ctr,aes128-ctr"
-      macs: "hmac-sha2-512-etm@openssh.com,hmac-sha2-256-etm@openssh.com,hmac-ripemd160-etm@openssh.com,umac-128-etm@openssh.com,hmac-sha2-512,hmac-sha2-256,hmac-ripemd160,umac-128@openssh.com"
-  server:
-    pkg:
-      name: "openssh-server"
-      state: "latest"
-    config:
-      usergroup: "sshusers"
-      kexalgorithms: "curve25519-sha256@libssh.org,diffie-hellman-group-exchange-sha256"
-      passwordauthentication: "no"
-      pubkeyauthentication: "yes"
-      ciphers: "chacha20-poly1305@openssh.com,aes256-gcm@openssh.com,aes128-gcm@openssh.com,aes256-ctr,aes192-ctr,aes128-ctr"
-      macs: "hmac-sha2-512-etm@openssh.com,hmac-sha2-256-etm@openssh.com,hmac-ripemd160-etm@openssh.com,umac-128-etm@openssh.com,hmac-sha2-512,hmac-sha2-256,hmac-ripemd160,umac-128@openssh.com"
-      port: 22
-      listenaddress:
-        - 0.0.0.0
-        - "::"
-      loglevel: "INFO"
-      permitrootlogin: "without-password"
-      strictmodes: "yes"
-      challengeresponseauthentication: "no"
-      usepam: "yes"
-      x11forwarding: "no"
-      maxauthtries: 4
-      clientaliveinterval: 900
-      clientalivecountmax: 0
-    regenerate_host_keys: false
-    service:
-      name: "ssh"
-      enabled: true
-      state: "started"
+openssh_client_pkg_name: openssh-client
+openssh_client_pkg_state: latest
+
+openssh_client_config_enable_github: false
+openssh_client_config_kexalgorithms: "curve25519-sha256@libssh.org,diffie-hellman-group-exchange-sha256"
+openssh_client_config_passwordauthentication: "no"
+openssh_client_config_pubkeyauthentication: "yes"
+openssh_client_config_hostkeyalgorithms: "ssh-ed25519-cert-v01@openssh.com,ssh-rsa-cert-v01@openssh.com,ssh-rsa-cert-v00@openssh.com,ssh-ed25519,ssh-rsa"
+openssh_client_config_ciphers: "chacha20-poly1305@openssh.com,aes256-gcm@openssh.com,aes128-gcm@openssh.com,aes256-ctr,aes192-ctr,aes128-ctr"
+openssh_client_config_macs: "hmac-sha2-512-etm@openssh.com,hmac-sha2-256-etm@openssh.com,hmac-ripemd160-etm@openssh.com,umac-128-etm@openssh.com,hmac-sha2-512,hmac-sha2-256,hmac-ripemd160,umac-128@openssh.com"
+
+
+openssh_server_pkg_name: openssh-server
+openssh_server_pkg_state: latest
+
+openssh_server_config_usergroup: sshusers
+openssh_server_config_kexalgorithms: "curve25519-sha256@libssh.org,diffie-hellman-group-exchange-sha256"
+openssh_server_config_passwordauthentication: "no"
+openssh_server_config_pubkeyauthentication: "yes"
+openssh_server_config_ciphers: "chacha20-poly1305@openssh.com,aes256-gcm@openssh.com,aes128-gcm@openssh.com,aes256-ctr,aes192-ctr,aes128-ctr"
+openssh_server_config_macs: "hmac-sha2-512-etm@openssh.com,hmac-sha2-256-etm@openssh.com,hmac-ripemd160-etm@openssh.com,umac-128-etm@openssh.com,hmac-sha2-512,hmac-sha2-256,hmac-ripemd160,umac-128@openssh.com"
+openssh_server_config_port: 22
+openssh_server_config_listenaddress:
+  - 0.0.0.0
+  - "::"
+openssh_server_config_loglevel: INFO
+openssh_server_config_permitrootlogin: "no"
+openssh_server_config_strictmodes: "yes"
+openssh_server_config_challengeresponseauthentication: "no"
+openssh_server_config_usepam: "yes"
+openssh_server_config_x11forwarding: "no"
+openssh_server_config_maxauthtries: 4
+openssh_server_config_clientaliveinterval: 900
+openssh_server_config_clientalivecountmax: 0
+
+openssh_server_regenerate_host_keys: false
+
+openssh_server_service_name: ssh
+openssh_server_service_enabled: true
+openssh_server_service_state: started

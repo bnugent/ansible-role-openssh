@@ -1,6 +1,6 @@
 ---
 - name: Start the SSH service
   service:
-    name: "{{ openssh.server.service.name }}"
-    enabled: "{{ openssh.server.service.enabled }}"
-    state: "{{ openssh.server.service.state }}"
+    name: "{{ openssh_server_service_name }}"
+    enabled: "{{ openssh_server_service_enabled }}"
+    state: "{{ openssh_server_service_state }}"

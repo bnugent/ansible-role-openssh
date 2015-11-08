@@ -1,11 +1,11 @@
 ---
 - name: Install OpenSSH server
   apt:
-    name: "{{ openssh.server.pkg.name }}"
-    state: "{{ openssh.server.pkg.state }}"
+    name: "{{ openssh_server_pkg_name }}"
+    state: "{{ openssh_server_pkg_state }}"
 
 
 - name: Install OpenSSH client
   apt:
-    name: "{{ openssh.client.pkg.name }}"
-    state: "{{ openssh.client.pkg.state }}"
+    name: "{{ openssh_client_pkg_name }}"
+    state: "{{ openssh_client_pkg_state }}"
