@@ -1,38 +1,66 @@
 Role Name
 =========
 
-A brief description of the role goes here.
+This role installs and configures OpenSSH client and server on Ubuntu. The
+default configuration is based on the [Secure Secure
+Shell](https://stribika.github.io/2015/01/04/secure-secure-shell.html) blog
+post by [stribika](https://github.com/stribika).
 
-Requirements
-------------
-
-Any pre-requisites that may not be covered by Ansible itself or the role should be mentioned here. For instance, if the role uses the EC2 module, it may be a good idea to mention in this section that the boto package is required.
 
 Role Variables
 --------------
 
-A description of the settable variables for this role should go here, including any variables that are in defaults/main.yml, vars/main.yml, and any variables that can/should be set via parameters to the role. Any variables that are read from other roles and/or the global scope (ie. hostvars, group vars, etc.) should be mentioned here as well.
+* `openssh_client_pkg_name` - Name of the OpenSSH client package
+* `openssh_client_pkg_state` - OpenSSH client package state
+* `openssh_client_config_enable_github` - GitHub sometimes needs different ciphers
+* `openssh_client_config_kexalgorithms` - Key exchange algorithms this client supports
+* `openssh_client_config_passwordauthentication` - Whether to enable password authentication
+* `openssh_client_config_pubkeyauthentication` - Whether to enable public key authentication
+* `openssh_client_config_hostkeyalgorithms` - Host key algorithms for connections from this host
+* `openssh_client_config_ciphers` - Supported ciphers for client connections from this host
+* `openssh_client_config_macs` - Message authentication codes for client connections from this host
+* `openssh_server_pkg_name` - Name of the OpenSSH server package
+* `openssh_server_pkg_state` - OpenSSH server package state
+* `openssh_server_config_usergroup` - Group name of user group permitted to access this host
+* `openssh_server_config_kexalgorithms` - Key exchange algorithms this server supports
+* `openssh_server_config_passwordauthentication` - Enable or disable password authentication to this server
+* `openssh_server_config_pubkeyauthentication` - Enable or disable public key authentication to this server
+* `openssh_server_config_ciphers` - Supported ciphers
+* `openssh_server_config_macs` - Supported message authentication codes
+* `openssh_server_config_port` - Server listen port
+* `openssh_server_config_listenaddress` - Server listen addresses
+* `openssh_server_config_loglevel` - Server log level
+* `openssh_server_config_permitrootlogin` - Enable or disable logins from the root user
+* `openssh_server_config_strictmodes` - Enable or disable strict file mode checking
+* `openssh_server_config_challengeresponseauthentication` - Enable or disable challenge response authentication
+* `openssh_server_config_usepam` - Enable or disable PAM
+* `openssh_server_config_x11forwarding` - Enable or disable X11 forwarding
+* `openssh_server_config_maxauthtries` - Maximum number of authentication attempts per connection
+* `openssh_server_config_clientaliveinterval` - Interval in seconds after which a message is sent to the client to see if its alive
+* `openssh_server_config_clientalivecountmax` - Number of client alive messages that will be sent
+* `openssh_server_regenerate_host_keys` - Whether to regenerate the distro-provided default host keys
+* `openssh_server_service_name` - Name of the OpenSSH server daemon
+* `openssh_server_service_enabled` - Enable or disable OpenSSH server on boot
+* `openssh_server_service_state` - OpenSSH server daemon state
 
 Dependencies
 ------------
 
-A list of other roles hosted on Galaxy should go here, plus any details in regards to parameters that may need to be set for other roles, or variables that are used from other roles.
+none
 
 Example Playbook
 ----------------
 
-Including an example of how to use your role (for instance, with variables passed in as parameters) is always nice for users too:
-
     - hosts: servers
       roles:
-         - { role: username.rolename, x: 42 }
+         - openssh
 
 License
 -------
 
-BSD
+MIT
 
 Author Information
 ------------------
 
-An optional section for the role authors to include contact information, or a website (HTML is not allowed).
+Role created by Ben Nugent.
