@@ -3,11 +3,11 @@ galaxy_info:
   author: Ben Nugent
   description: Installs and configures OpenSSH client and server
   license: MIT
-  min_ansible_version: 1.2
+  min_ansible_version: 1.8
   platforms:
   - name: Ubuntu
     versions:
-    - all
+    - trusty
   categories:
   - system
 dependencies: []
